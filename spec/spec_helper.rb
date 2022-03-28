@@ -24,7 +24,7 @@ require 'capybara/rspec'
 require 'rspec'
 
 # tell Capybara about our app class
-Capybara.app = Battle
+Capybara.app = BookmarkManager
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
