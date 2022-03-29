@@ -1,4 +1,11 @@
 
+>> Setting up the database
+1. connect to psql
+2. Create the database with CREATE DATABASE bookmark_manager;
+3. connect with \c bookmark_manager;
+4. run the query in /db/migrations/01_create_bookmarks_table.sql
+
+
 >> User Stories
 
  - Show a list of bookmarks
@@ -22,3 +29,4 @@
 └──────────────────┘                  │                  └─────────────────────────────► page    │
                                       │                  ◄─────────────────────────────┐         │
                                       └──────────────────┘                             └─────────┘
+
