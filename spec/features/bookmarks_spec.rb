@@ -1,9 +1,13 @@
 require 'bookmark'
+require 'pg'
 
-xfeature 'bookmarks page' do
+feature 'bookmarks page' do
   scenario 'viewing the bookmarks' do
     visit '/bookmarks'
-    expect(page).to have_content 'https://www.evilresource.com/'
-    expect(page).to have_content 'https://www.andertons.co.uk/'
+    Bookmark.create(url: 'https://www.evilresource.com/', title: 'Evil Resource')
+    Bookmark.create(url: 'https://www.andertons.co.uk/', title: 'Andertons')
+    visit '/bookmarks'
+    expect(page).to have_content 'Evil Resource'
+    expect(page).to have_content 'Andertons'
   end
 end

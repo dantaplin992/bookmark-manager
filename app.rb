@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
+require_relative 'lib/bookmark.rb'
 
 class BookmarkManager < Sinatra::Base
   configure :development do
@@ -11,8 +12,36 @@ class BookmarkManager < Sinatra::Base
   end
 
   get '/bookmarks' do
-    @bookmarks = Bookmark.all
-    erb :bookmarks
+    # @bookmarks = Bookmark.all
+    erb(:bookmarks, locals: { bookmarks: Bookmark.all })
+  end
+
+  get '/bookmarks/new' do
+    erb :"bookmarks/new"
+  end
+
+  post '/bookmarks' do
+    Bookmark.create(url: params[:newurl], title: params[:title])
+    redirect '/bookmarks'
+  end
+
+  get '/bookmarks/delete' do
+    erb :'bookmarks/delete'
+  end
+
+  post '/remove-bookmark' do
+    p params
+    Bookmark.delete(params[:title_to_delete])
+    redirect '/bookmarks'
+  end
+
+  get '/bookmarks/update' do
+    erb :'bookmarks/update_bm'
+  end
+
+  post '/updated' do
+    Bookmark.update(old_title: params[:old_title], new_url: params[:new_url], new_title: params[:new_title])
+    redirect '/bookmarks'
   end
 
   run! if app_file == $0

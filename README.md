@@ -30,3 +30,23 @@
                                       │                  ◄─────────────────────────────┐         │
                                       └──────────────────┘                             └─────────┘
 
+ - Add new bookmarks
+
+ > As a user
+ > So that I can add more bookmarks to the list
+ > I'd like an add bookmark feature
+
+  - Delete bookmarks
+
+ > As a user
+ > So I don't see pages I no longer visit in the list
+ > I would like to be able to delete bookmarks
+
+  - Update Bookmarks
+
+  > As a user
+  > So that I can change the details of a bookmark if they are incorrect
+  > I would like an update page
+
+  Get update > Post changes >>redirect>> Get bookmarks
+    ^^ view takes params, model updates db
