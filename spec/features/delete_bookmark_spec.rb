@@ -1,12 +1,11 @@
 feature 'delete bookmarks' do
   it 'deletes specified bookmarks from the list' do
-    Bookmark.create(url: 'https://www.evilresource.com/', title: 'Evil Resource')
+    Bookmark.create(url: 'www.youtube.com/', title: 'Youtube')
     visit '/bookmarks'
-    expect(page).to have_link('Evil Resource', href: 'https://www.evilresource.com/')
+    expect(page).to have_link('Youtube', href: 'www.youtube.com/')
 
-    first('.bookmark').click_button 'delete'
-
+    click_button 'Delete'
     expect(current_path).to eq '/bookmarks'
-    expect(page).not_to have_link('Evil Resource', href: 'https://www.evilresource.com/')
+    expect(page).not_to have_link('Youtube', href: 'www.youtube.com/')
   end
 end

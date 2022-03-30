@@ -3,8 +3,8 @@ require 'pg'
 class Bookmark
   def self.all 
     connection = connect_to_db
-    result = connection.exec('SELECT * FROM bookmarks;')
-    result.map { |bookmark| {"url" => bookmark['url'], "title" => bookmark['title'] } }
+    result = connection.exec('SELECT id,url,title FROM bookmarks;')
+    result.map { |bookmark| {"id" => bookmark['id'], "url" => bookmark['url'], "title" => bookmark['title'] } }
   end
 
   def self.create(url:, title:)
@@ -15,26 +15,27 @@ class Bookmark
   )
   end
 
-  def self.delete(title)
+  def self.delete(id)
+    id = id.to_i
     connection = connect_to_db
     connection.exec_params(
-      "DELETE FROM bookmarks WHERE title=$1;",
-    [title]
+      "DELETE FROM bookmarks WHERE id=$1;",
+    [id]
     )
   end
 
   def self.update(old_title:, url:, new_title:)
     connection = connect_to_db
     entry = connection.exec("SELECT * FROM bookmarks WHERE title = '#{old_title}';")
-    if !url.empty?
-      connection.exec_params("UPDATE bookmarks SET url = $1 WHERE title = '#{old_title}';", [url])
-    end
-    if !new_title.empty?
-      connection.exec_params("UPDATE bookmarks SET title = $1 WHERE title = '#{old_title}';", [new_title])
-    end
+    connection.exec_params(
+      "UPDATE bookmarks SET url = $1 WHERE title = '#{old_title}';",
+      [url]
+      ) unless url.empty?
+    connection.exec_params(
+      "UPDATE bookmarks SET title = $1 WHERE title = '#{old_title}';",
+      [new_title]
+      ) unless new_title.empty?
   end
-
-  private
 
   def self.connect_to_db
     if ENV['ENVIRONMENT'] == 'test'

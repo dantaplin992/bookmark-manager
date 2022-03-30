@@ -1,17 +1,17 @@
 <body>
   <h1>Bookmarks</h1>
   <ul>
-    <% bookmarks.each do |bookmark| %>
-      <li class="bookmark" id="bookmark-<%= bookmark["id"] %>">
-        <a href=<%= bookmark["url"] %>><%= bookmark["title"] %></a>
+    
+      <li class="bookmark" id="bookmark-">
+        <a href=https://www.evilresource.com/>Evil Resource</a>
         <p>
           <form action="/bookmarks/delete" method="post">
             <input type='hidden' name='_method' value='DELETE'/>
-            <input type='hidden' name='id' value=<%= bookmark["id"] %> />
+            <input type='hidden' name='title' value=Evil Resource />
             <input type="submit" value="Delete" />
           </form>
         </p>
       </li>
-    <% end %>
+    
   </ul>
 </body>
