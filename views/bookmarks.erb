@@ -23,9 +23,10 @@
             </td>
           </tr>
          <% Bookmark.comments(bookmark["id"]).each do |comment| %>
+         <% p comment %>
             <tr>
               <td>
-                <% comment["text"] %>
+                <%= comment["text"] %>
               </td>
             </tr>
           <% end %>
