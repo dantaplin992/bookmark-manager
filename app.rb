@@ -36,10 +36,10 @@ class BookmarkManager < Sinatra::Base
     erb :'bookmarks/update_bm'
   end
 
-  post '/updated' do
+  patch '/updated' do
     Bookmark.update(
       old_title: params[:old_title], 
-      new_url: params[:new_url], 
+      url: params[:new_url], 
       new_title: params[:new_title]
     )
     redirect '/bookmarks'
