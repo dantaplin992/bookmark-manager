@@ -47,4 +47,10 @@ RSpec.describe Bookmark do
     expect(Bookmark.all[0]).to include("url" => "https://www.andertons.co.uk/")
     expect(Bookmark.all[0]).to include("title" => "PMT")
   end
+
+  it 'validates that a given string is a URL' do
+    expect(Bookmark.validate_url("http://google.com")).to be true
+    expect(Bookmark.validate_url("aaa")).to be false
+  end
+
 end

@@ -2,6 +2,7 @@ require 'pg'
 require_relative './database_connection.rb'
 
 class Bookmark
+
   def self.all
     result = DatabaseConnection.query('SELECT id,url,title FROM bookmarks;')
     result.map { |bookmark| {"id" => bookmark['id'], "url" => bookmark['url'], "title" => bookmark['title'] } }
@@ -31,6 +32,17 @@ class Bookmark
       "UPDATE bookmarks SET title = $1 WHERE title = '#{old_title}';",
       [new_title]
       ) unless new_title.empty?
+  end
+
+  def self.validate_url(url)
+    !(url =~ /\A#{URI::regexp(['http', 'https'])}\z/).nil?
+  end
+
+  def self.comments(id)
+    DatabaseConnection.query(
+      "SELECT * FROM comments WHERE bookmark_id = $1;",
+      [id]
+    )
   end
 
 end

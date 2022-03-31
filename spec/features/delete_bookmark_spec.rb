@@ -4,7 +4,7 @@ feature 'delete bookmarks' do
     visit '/bookmarks'
     expect(page).to have_link('Youtube', href: 'www.youtube.com/')
 
-    click_button 'Delete'
+    first('.bookmark').click_button 'Delete'
     expect(current_path).to eq '/bookmarks'
     expect(page).not_to have_link('Youtube', href: 'www.youtube.com/')
   end

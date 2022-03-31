@@ -3,16 +3,34 @@
   <ul>
     <% bookmarks.each do |bookmark| %>
       <li class="bookmark" id="bookmark-<%= bookmark["id"] %>">
-        <a href=<%= bookmark["url"] %>><%= bookmark["title"] %></a>
-        <p>
-          <form action="/bookmarks/delete" method="post">
-            <input type='hidden' name='_method' value='DELETE'/>
-            <input type='hidden' name='id' value=<%= bookmark["id"] %> />
-            <input type="submit" value="Delete" />
-          </form>
-        </p>
+        <table>
+          <tr>
+          <td>
+              <a href=<%= bookmark["url"] %>><%= bookmark["title"] %></a>
+            </td>
+            <td>
+              <form action="/bookmarks/delete" method="post">
+                <input type='hidden' name='_method' value='DELETE'/>
+                <input type='hidden' name='id' value=<%= bookmark["id"] %> />
+                <input type="submit" value="Delete" />
+              </form>
+            </td>
+            <td>
+              <form action="/bookmarks/<%= bookmark["id"] %>/comments/new" method="post">
+                <input type="hidden" name="id" value=<%= bookmark["id"] %>>
+                <input type="submit" value="Add Comment" />
+              </form>
+            </td>
+          </tr>
+         <% Bookmark.comments(bookmark["id"]).each do |comment| %>
+            <tr>
+              <td>
+                <% comment["text"] %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
       </li>
     <% end %>
   </ul>
-  <p><%= flash[:notice] %></p>
 </body>
