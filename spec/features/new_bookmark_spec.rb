@@ -10,4 +10,13 @@ feature 'add a new bookmark' do
     click_on 'submit'
     expect(page).to have_content 'PMT'
   end
+
+  scenario 'The bookmark must be a valid URL' do
+    visit('/bookmarks/new')
+    fill_in('newurl', with: 'not a real bookmark')
+    click_button('submit')
+  
+    expect(page).not_to have_content "not a real bookmark"
+    expect(page).to have_content "You must submit a valid URL."
+  end
 end
